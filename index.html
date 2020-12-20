@@ -13,6 +13,7 @@
       let canvas = document.querySelector("canvas");
       let ctx = canvas.getContext("2d");
       let x = 150;
+      let y = 180;
       let t0;
       let dt;
 
@@ -31,10 +32,11 @@
 
         // Atualiza estado
         x = x + 10 * dt;
+        y = y + 500 * Math.cos(t / 200) * dt;
 
         // Desenha elementos
         ctx.fillStyle = "white";
-        ctx.fillRect(x, 150, 20, 20);
+        ctx.fillRect(x, y, 20, 20);
 
         requestAnimationFrame(desenha);
 
