@@ -110,9 +110,10 @@
           }
 
           if (colidiram(player, sprite) && o !== sprite) {
-            sprite.x = 1000;
+            sprite.x = canvas.width * (1 + 10 * Math.random());
             sprite.vx = 100;
             sprite.ax = 0;
+            sprite.y = canvas.height * Math.random();
 
             pontos -= 3;
           }
