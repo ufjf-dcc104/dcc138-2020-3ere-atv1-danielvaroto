@@ -24,12 +24,14 @@
       };
 
       // estados elemento vermelho
-      let ex = 300;
-      let evx = 0;
-      let eax = 0;
-      let ey = 200;
-      let evy = 0;
-      let eay = 0;
+      let enemy = {
+        x: 300,
+        vx: 0,
+        ax: 0,
+        y: 200,
+        vy: 0,
+        ay: 0,
+      };
 
       let t0;
       let dt;
@@ -50,8 +52,8 @@
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         // Controladores
-        eax = 0.5 * (player.x - ex) - 0.2 * evx;
-        eay = 0.5 * (player.y - ey) - 0.2 * evy;
+        enemy.ax = 0.5 * (player.x - enemy.x) - 0.2 * enemy.vx;
+        enemy.ay = 0.5 * (player.y - enemy.y) - 0.2 * enemy.vy;
 
         // Atualiza dinâmica dos estado
         player.vx = player.vx + player.ax * dt;
@@ -59,17 +61,17 @@
         player.vy = player.vy + player.ay * dt;
         player.y = player.y + player.vy * dt;
 
-        evx = evx + eax * dt;
-        ex = ex + evx * dt;
-        evy = evy + eay * dt;
-        ey = ey + evy * dt;
+        enemy.vx = enemy.vx + enemy.ax * dt;
+        enemy.x = enemy.x + enemy.vx * dt;
+        enemy.vy = enemy.vy + enemy.ay * dt;
+        enemy.y = enemy.y + enemy.vy * dt;
 
         // Desenha elementos
         ctx.fillStyle = "white";
         ctx.fillRect(player.x, player.y, 20, 20);
 
         ctx.fillStyle = "red";
-        ctx.fillRect(ex, ey, 20, 20);
+        ctx.fillRect(enemy.x, enemy.y, 20, 20);
 
         requestAnimationFrame(desenha);
 
@@ -106,19 +108,15 @@
         console.log(e.key);
         switch (e.key) {
           case "ArrowUp":
-            player.vy = 0;
             player.ay = 0;
             break;
           case "ArrowDown":
-            player.vy = 0;
             player.ay = 0;
             break;
           case "ArrowLeft":
-            player.vx = 0;
             player.ax = 0;
             break;
           case "ArrowRight":
-            player.vx = 0;
             player.ax = 0;
             break;
 
