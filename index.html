@@ -13,6 +13,8 @@
       let canvas = document.querySelector("canvas");
       let ctx = canvas.getContext("2d");
 
+      let pontos = 0;
+
       let player = {
         x: 150,
         vx: 0,
@@ -85,10 +87,37 @@
         player.desenhar();
 
         for (let i = 0; i < sprites.length; i++) {
-          sprites[i].mover?.();
-          sprites[i].controlar?.(player);
-          sprites[i].desenhar();
+          let sprite = sprites[i];
+
+          sprite.mover?.();
+          sprite.controlar?.(player);
+          sprite.desenhar();
+
+          if (colidiram(o, sprite) && o !== sprite) {
+            o.x = -1000;
+            o.y = -1000;
+            o.vx = 0;
+            o.ax = 0;
+
+            sprite.x = 1000;
+            sprite.vx = 100;
+            sprite.ax = 0;
+
+            pontos++;
+          }
+
+          if (colidiram(player, sprite) && o !== sprite) {
+            sprite.x = 1000;
+            sprite.vx = 100;
+            sprite.ax = 0;
+
+            pontos -= 3;
+          }
         }
+
+        ctx.fillStyle = "yellow";
+        ctx.font = "20px Impact";
+        ctx.fillText(pontos, 10, 30);
 
         requestAnimationFrame(desenha);
 
@@ -122,7 +151,6 @@
 
       function teclaPressionada(e) {
         // Adiciona controle de velocidades
-        console.log(e.key);
         switch (e.key) {
           case "ArrowUp":
             player.ay = -K;
@@ -151,7 +179,6 @@
 
       function teclaSolta(e) {
         // Adiciona controle de velocidades
-        console.log(e.key);
         switch (e.key) {
           case "ArrowUp":
             player.ay = 0;
@@ -169,6 +196,15 @@
           default:
             break;
         }
+      }
+
+      function colidiram(a, b) {
+        return !(
+          a.x > b.x + 20 ||
+          a.x + 20 < b.x ||
+          a.y > b.y + 20 ||
+          a.y + 20 < b.y
+        );
       }
     </script>
   </body>
