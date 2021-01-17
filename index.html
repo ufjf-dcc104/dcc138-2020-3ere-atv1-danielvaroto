@@ -43,6 +43,26 @@
         sprites.push(sprite);
       }
 
+      let o = {
+        x: -1000,
+        vx: 0,
+        ax: 0,
+        y: 150,
+        vy: 0,
+        ay: 0,
+        cor: "blue",
+        desenhar: desenharElemento,
+        mover: moverElemento,
+        controlar: function () {
+          if (this.x > canvas.width + 60) {
+            this.x = -1000;
+            this.ax = 0;
+            this.vx = 0;
+          }
+        },
+      };
+      sprites.push(o);
+
       let t0;
       let dt;
 
@@ -65,8 +85,8 @@
         player.desenhar();
 
         for (let i = 0; i < sprites.length; i++) {
-          sprites[i].mover();
-          sprites[i].controlar(player);
+          sprites[i].mover?.();
+          sprites[i].controlar?.(player);
           sprites[i].desenhar();
         }
 
@@ -115,6 +135,13 @@
             break;
           case "ArrowRight":
             player.ax = +K;
+            break;
+          case " ":
+            if (o.x === -1000) {
+              o.x = player.x;
+              o.y = player.y;
+              o.ax = 100;
+            }
             break;
 
           default:
