@@ -21,10 +21,9 @@
         y: 180,
         vy: 0,
         ay: 0,
-        desenhar: function () {
-          ctx.fillStyle = "white";
-          ctx.fillRect(this.x, this.y, 20, 20);
-        },
+        cor: "white",
+        desenhar: desenharElemento,
+        mover: moverElemento,
       };
 
       // estados elemento vermelho
@@ -35,10 +34,9 @@
         y: 200,
         vy: 0,
         ay: 0,
-        desenhar: function () {
-          ctx.fillStyle = "red";
-          ctx.fillRect(this.x, this.y, 20, 20);
-        },
+        cor: "red",
+        desenhar: desenharElemento,
+        mover: moverElemento,
       };
 
       let t0;
@@ -64,15 +62,8 @@
         enemy.ay = 0.5 * (player.y - enemy.y) - 0.2 * enemy.vy;
 
         // Atualiza dinâmica dos estado
-        player.vx = player.vx + player.ax * dt;
-        player.x = player.x + player.vx * dt;
-        player.vy = player.vy + player.ay * dt;
-        player.y = player.y + player.vy * dt;
-
-        enemy.vx = enemy.vx + enemy.ax * dt;
-        enemy.x = enemy.x + enemy.vx * dt;
-        enemy.vy = enemy.vy + enemy.ay * dt;
-        enemy.y = enemy.y + enemy.vy * dt;
+        player.mover();
+        enemy.mover();
 
         // Desenha elementos
         player.desenhar();
@@ -81,6 +72,17 @@
         requestAnimationFrame(desenha);
 
         t0 = t;
+      }
+
+      function moverElemento() {
+        this.vx = this.vx + this.ax * dt;
+        this.x = this.x + this.vx * dt;
+        this.vy = this.vy + this.ay * dt;
+        this.y = this.y + this.vy * dt;
+      }
+      function desenharElemento() {
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, 20, 20);
       }
 
       addEventListener("keydown", teclaPressionada);
