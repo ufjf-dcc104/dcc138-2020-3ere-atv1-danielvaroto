@@ -172,8 +172,8 @@
             break;
           case " ":
             if (o.x === -1000) {
-              o.x = player.x;
-              o.y = player.y;
+              o.x = player.x + player.w;
+              o.y = player.y + (player.h / 2 - o.h / 2);
               o.ax = 100;
             }
             break;
