@@ -21,6 +21,10 @@
         y: 180,
         vy: 0,
         ay: 0,
+        desenhar: function () {
+          ctx.fillStyle = "white";
+          ctx.fillRect(this.x, this.y, 20, 20);
+        },
       };
 
       // estados elemento vermelho
@@ -31,6 +35,10 @@
         y: 200,
         vy: 0,
         ay: 0,
+        desenhar: function () {
+          ctx.fillStyle = "red";
+          ctx.fillRect(this.x, this.y, 20, 20);
+        },
       };
 
       let t0;
@@ -67,11 +75,8 @@
         enemy.y = enemy.y + enemy.vy * dt;
 
         // Desenha elementos
-        ctx.fillStyle = "white";
-        ctx.fillRect(player.x, player.y, 20, 20);
-
-        ctx.fillStyle = "red";
-        ctx.fillRect(enemy.x, enemy.y, 20, 20);
+        player.desenhar();
+        enemy.desenhar();
 
         requestAnimationFrame(desenha);
 
