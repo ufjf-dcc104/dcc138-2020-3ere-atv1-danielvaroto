@@ -13,7 +13,6 @@
       let canvas = document.querySelector("canvas");
       let ctx = canvas.getContext("2d");
 
-      // estados elemento branco
       let player = {
         x: 150,
         vx: 0,
@@ -26,19 +25,23 @@
         mover: moverElemento,
       };
 
-      // estados elemento vermelho
-      let enemy = {
-        x: 300,
-        vx: 0,
-        ax: 0,
-        y: 200,
-        vy: 0,
-        ay: 0,
-        cor: "red",
-        desenhar: desenharElemento,
-        mover: moverElemento,
-        controlar: perseguiAlvo,
-      };
+      const sprites = [];
+      for (let ne = 0; ne < 20; ne++) {
+        let sprite = {
+          x: canvas.width * Math.random(),
+          vx: 0,
+          ax: 0,
+          y: canvas.height * Math.random(),
+          vy: 0,
+          ay: 0,
+          cor: "red",
+          desenhar: desenharElemento,
+          mover: moverElemento,
+          controlar: perseguiAlvo,
+        };
+
+        sprites.push(sprite);
+      }
 
       let t0;
       let dt;
@@ -58,16 +61,14 @@
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Controladores
-        enemy.controlar(player);
-
-        // Atualiza dinâmica dos estado
         player.mover();
-        enemy.mover();
-
-        // Desenha elementos
         player.desenhar();
-        enemy.desenhar();
+
+        for (let i = 0; i < sprites.length; i++) {
+          sprites[i].mover();
+          sprites[i].controlar(player);
+          sprites[i].desenhar();
+        }
 
         requestAnimationFrame(desenha);
 
