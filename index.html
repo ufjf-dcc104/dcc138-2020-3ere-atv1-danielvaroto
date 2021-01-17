@@ -22,6 +22,8 @@
         y: 180,
         vy: 0,
         ay: 0,
+        w: 40,
+        h: 15,
         cor: "white",
         desenhar: desenharElemento,
         mover: moverElemento,
@@ -36,6 +38,8 @@
           y: canvas.height * Math.random(),
           vy: 0,
           ay: 0,
+          w: 15,
+          h: 15,
           cor: "red",
           desenhar: desenharElemento,
           mover: moverElemento,
@@ -52,6 +56,8 @@
         y: 150,
         vy: 0,
         ay: 0,
+        w: 5,
+        h: 5,
         cor: "blue",
         desenhar: desenharElemento,
         mover: moverElemento,
@@ -83,9 +89,6 @@
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        player.mover();
-        player.desenhar();
-
         for (let i = 0; i < sprites.length; i++) {
           let sprite = sprites[i];
 
@@ -115,6 +118,9 @@
           }
         }
 
+        player.mover();
+        player.desenhar();
+
         ctx.fillStyle = "yellow";
         ctx.font = "20px Impact";
         ctx.fillText(pontos, 10, 30);
@@ -133,7 +139,7 @@
 
       function desenharElemento() {
         ctx.fillStyle = this.cor;
-        ctx.fillRect(this.x, this.y, 20, 20);
+        ctx.fillRect(this.x, this.y, this.w, this.h);
       }
 
       function perseguiAlvo(alvo) {
@@ -200,10 +206,10 @@
 
       function colidiram(a, b) {
         return !(
-          a.x > b.x + 20 ||
-          a.x + 20 < b.x ||
-          a.y > b.y + 20 ||
-          a.y + 20 < b.y
+          a.x > b.x + b.w ||
+          a.x + a.w < b.x ||
+          a.y > b.y + b.h ||
+          a.y + a.h < b.y
         );
       }
     </script>
